@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
+    <meta name="theme-color" content="#1f3d4d" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>Orb Survey</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./icon-192.png" />
+  </head>
+  <body>
+    <div id="install-bar" hidden></div>
+    <div id="app"></div>
+    <div id="toast" hidden></div>
+    <div id="editor-sheet"></div>
+    <div id="disto-sheet"></div>
+    <div id="modal" hidden></div>
+    <input id="pdf-input" type="file" accept="application/pdf,.pdf" multiple hidden />
+    <input id="restore-input" type="file" accept=".orbsurvey,application/zip,application/octet-stream" hidden />
+    <input id="photo-input" type="file" accept="image/*" hidden />
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
