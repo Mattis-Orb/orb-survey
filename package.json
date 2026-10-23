@@ -1,0 +1,27 @@
+{
+  "name": "orb-survey",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Offline site-survey app for Orb Interiors kitchen plans",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 4173",
+    "test": "node --test src/winner.test.js src/disto/protocol.test.js src/csv.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mattis-Orb/orb-survey.git"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "fflate": "^0.8.3",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^6.4.299"
+  },
+  "devDependencies": {
+    "vite": "^8.3.5",
+    "vite-plugin-pwa": "^2.0.0"
+  }
+}
