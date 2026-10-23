@@ -3,6 +3,12 @@ import workerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 
 GlobalWorkerOptions.workerSrc = workerUrl;
 
+/** pdf.js 6 destroys the loading task, not the document proxy. */
+export async function closePdf(doc) {
+  if (!doc) return;
+  await doc.loadingTask?.destroy?.();
+}
+
 export async function inspectPdf(blob) {
   const data = new Uint8Array(await blob.arrayBuffer());
   const doc = await getDocument({ data }).promise;
@@ -12,17 +18,17 @@ export async function inspectPdf(blob) {
       const page = await doc.getPage(index);
       const content = await page.getTextContent();
       texts.push(content.items.map((item) => item.str || '').join(' '));
+      page.cleanup();
     }
     return { pageCount: doc.numPages, texts };
   } finally {
-    await doc.destroy();
+    await closePdf(doc);
   }
 }
 
 export async function loadPdf(blob) {
   const data = new Uint8Array(await blob.arrayBuffer());
-  const task = getDocument({ data });
-  return task.promise;
+  return getDocument({ data }).promise;
 }
 
 /** Render a page sharp enough to pinch-zoom on a phone. CSS size stays in PDF points. */

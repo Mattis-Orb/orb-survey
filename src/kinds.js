@@ -210,7 +210,7 @@ export function entrySummary(entry) {
   }
   if (entry.note && entry.kind !== 'note') bits.push(entry.note);
   if (entry.kind === 'note') return entry.note || 'Empty note';
-  return bits.join(' · ') || 'No measurement yet';
+  return bits.join(' · ') || 'Marked on the plan';
 }
 
 export function pinCaption(entry) {

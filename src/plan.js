@@ -3,7 +3,7 @@ import { showToast } from './dialogs.js';
 import { closeEditor, editorEntryId, openEditor } from './editor.js';
 import { esc } from './format.js';
 import { MOVE_TOOL, defaultFields, kindById, missingLabels, pinCaption, toolIcon, tools } from './kinds.js';
-import { loadPdf, renderPage } from './pdf.js';
+import { closePdf, loadPdf, renderPage } from './pdf.js';
 import { addEntry, deleteEntry, entriesFor, getBlob, getEntry, getPlot, setActivePage, updateEntry } from './store.js';
 
 function clamp(value, min, max) {
@@ -458,7 +458,7 @@ export function mountPlan({ projectId, plotId }) {
     destroy() {
       destroyed = true;
       window.removeEventListener('resize', onResize);
-      pdfDoc?.destroy?.();
+      closePdf(pdfDoc);
       pdfDoc = null;
     },
     handle(action, button) {

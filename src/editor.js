@@ -73,6 +73,8 @@ export function openEditor(id) {
   if (first) {
     setTimeout(() => {
       if (openId !== id) return;
+      const active = document.activeElement;
+      if (active?.matches?.('#editor-sheet [data-measure], #editor-sheet textarea')) return;
       first.focus();
       setFocused(first);
       updateShotHint();

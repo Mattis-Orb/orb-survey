@@ -1,6 +1,6 @@
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 import { getDocument } from 'pdfjs-dist';
-import { fractionToPdf } from './pdf.js';
+import { closePdf, fractionToPdf } from './pdf.js';
 import { entrySummary, kindById } from './kinds.js';
 import { formatDay, formatMm, geomText, statusLabel } from './format.js';
 
@@ -217,7 +217,7 @@ async function appendPlanPages(out, font, plot, entries, pdfBlob) {
       drawEntries(page, entries.filter((entry) => entry.page === pageNumber), viewport, font);
     }
   } finally {
-    await jsDoc.destroy();
+    await closePdf(jsDoc);
   }
 }
 

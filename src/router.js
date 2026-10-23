@@ -30,6 +30,7 @@ import {
 } from './disto/session.js';
 import {
   closeEditor,
+  editorEntryId,
   openEditor,
   removeEntryPhoto,
   removeOpenEntry,
@@ -50,6 +51,7 @@ import {
   deleteProject,
   entriesFor,
   eraseEverything,
+  getEntry,
   getPlot,
   getProject,
   plotsFor,
@@ -58,8 +60,10 @@ import {
   setPlotStatus,
   subscribe,
   uniquePlotName,
+  updateEntry,
 } from './store.js';
 import { buildRows, toCsv } from './csv.js';
+import { entrySummary } from './kinds.js';
 import { defaultPage, labelPages, mergeWinner, nameFromFilename } from './winner.js';
 
 let route = { name: 'home' };
@@ -441,11 +445,12 @@ async function handle(action, button) {
     return;
   }
   if (action === 'pick-choice') {
-    const { getEntry, updateEntry } = await import('./store.js');
-    const { entrySummary } = await import('./kinds.js');
-    const entry = getEntry((await import('./editor.js')).editorEntryId());
+    const id = editorEntryId();
+    const key = button.dataset.key;
+    const value = button.dataset.value;
+    const entry = id ? getEntry(id) : null;
     if (!entry) return;
-    await updateEntry(entry.id, { fields: { [button.dataset.key]: button.dataset.value } });
+    await updateEntry(entry.id, { fields: { [key]: value } });
     for (const choice of button.parentElement.querySelectorAll('button')) {
       choice.classList.toggle('on', choice === button);
     }
@@ -571,17 +576,17 @@ export function startRouter() {
     else closeEditor();
   });
   document.getElementById('pdf-input').addEventListener('change', (event) => {
-    const { files } = event.target;
+    const files = [...event.target.files];
     event.target.value = '';
     importFiles(files);
   });
   document.getElementById('restore-input').addEventListener('change', (event) => {
-    const file = event.target.files?.[0];
+    const file = event.target.files?.[0] || null;
     event.target.value = '';
     onRestoreFile(file);
   });
   document.getElementById('photo-input').addEventListener('change', (event) => {
-    const file = event.target.files?.[0];
+    const file = event.target.files?.[0] || null;
     event.target.value = '';
     if (file) setEntryPhoto(file);
   });

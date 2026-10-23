@@ -92,7 +92,7 @@ export function promptDialog({ title, label, value = '', placeholder = '', confi
     });
     setTimeout(() => {
       input.focus();
-      input.select();
+      if (input.value) input.select();
     }, 40);
   });
 }
